@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="js/jquery-1.10.1.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+			    box-sizing: border-box;
+			}
+			
+			html, body {
+			    height: 100%;
+			    width: 100%;
+			    margin: 0;
+			    padding: 0;
+			    background-color: black;
+			}
+			/*增亮图片*/
+			#a123 {
+				width: 300px;
+				height: 240px;
+				margin: 0 auto;
+				background-image:url(img/20170921215000.png);
+			}
+			#a123:hover {
+				cursor: pointer;
+    			transition: filter .3s;
+    			filter: brightness(1.5) contrast(150%);
+			}
+			h1,p {
+				color: white;
+			}
+			p {
+				font-size: 18px;
+			}
+			
+			/*渐变色或者说是颜色丰富的阴影效果*/
+			    
+			.container2 {
+			    width: 200px;
+			    margin: 20px auto;
+			}
+			
+			.avator {
+			    position: relative;
+			    width: 200px;
+			    height: 200px;
+			    border-radius: 50%;
+			    background: url(img/30325717-52d0fc70-97f8-11e7-8d08-dbb960c85118.png) no-repeat center center;
+			    background-size: 100% 100%;
+			    margin: 0 auto;
+			    }
+			    
+			    .avator::after {
+			        content: "";
+			        position: absolute;
+			        top: 3%;
+			        left: 0%;
+			        width: 100%;
+			        height: 100%;
+			        background: url(img/30325717-52d0fc70-97f8-11e7-8d08-dbb960c85118.png);
+			        background-size: 100% 100%;
+			        border-radius: 50%;
+			        transform: scale(.95);
+			        filter: blur(10px) brightness(80%) opacity(.8);
+			        z-index: -1;
+			    }
+			
+			
+			p {
+			    margin-top: 30px;
+			    text-align: center;
+			    font-size: 18px;
+			    font-family: Righteous;
+			}
+			
+			/*blur 混合 contrast 产生融合效果*/
+			.container3 {
+			    width: 100%;
+			    height: 220px;
+			    position: relative;
+			    padding: 2em;
+			    filter: contrast(20);
+			    background-color: black;
+			    overflow: hidden;
+			}
+			.filter-mix {
+			    position: absolute;
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			    width: 300px;
+			    height: 200px;
+			    filter: contrast(20);
+			    background: #fff;
+			}
+			
+			.filter-mix::before {
+			    content: "";
+			    position: absolute;
+			    width: 120px;
+			    height: 120px;
+			    border-radius: 50%;
+			    background: #333;
+			    top: 40px;
+			    left: 40px;
+			    z-index: 2;
+			    filter: blur(6px);
+			    box-sizing: border-box;
+			    animation: filterBallMove 4s ease-out infinite;
+			}
+			
+			.filter-mix::after {
+			    content: "";
+			    position: absolute;
+			    width: 80px;
+			    height: 80px;
+			    border-radius: 50%;
+			    background: #3F51B5;
+			    top: 60px;
+			    right: 40px;
+			    z-index: 2;
+			    filter: blur(6px);
+			    animation: filterBallMove2 4s ease-out infinite;
+			}
+			
+			@keyframes filterBallMove {
+			    50% {
+			        left: 140px;
+			    }
+			}
+			
+			@keyframes filterBallMove2 {
+			    50% {
+			        right: 140px;
+			    }
+			}
+			
+			/*燃烧的火焰*/
+			.fire {
+			    width: 0;
+			    height: 0;
+			    border-radius: 45%;
+			    box-sizing: border-box;
+			    border: 100px solid #000;
+			    border-bottom: 100pxsolid transparent;
+			    background-color: #b5932f;
+			    transform: scaleX(.4);
+			    filter: blur(20px) contrast(30);
+			}
+			/*$douCount: 40;
+			$animationTime: 2;
+			$delayTime: 3;*/
+			
+			@function randomNum($max, $min: 0) {
+				@return ($min + random($max));
+			}
+			
+			
+			:root {
+			    --fireWidth: 115px;
+			    --fireHeight: 200px;
+			    --dotSize: 24px;
+			    --fireColor: #b5932f;
+			    // --fireColor: #008eff;
+			    // --fireColor: #ff9900;
+			    
+			}
+			
+			.g-container {
+			    position: relative;
+			    width: 384px;
+			    height: 300px;
+			    margin: 0 auto;
+			    background-color: #000;
+			}
+			
+			.g-fire {
+			    position: absolute;
+			    width: 0;
+			    height: 0;
+			    bottom: 100px;
+			    left: 50%;
+			    border-radius: 45%;
+			    box-sizing: border-box;
+			    border: 200px solid #000;
+			    border-bottom: 200px solid transparent;
+			    transform: translate(-50%, 0) scaleX(.4);
+			    background-color: var(--fireColor);
+			    filter: blur(20px) contrast(30);
+			}
+			
+			.g-dot {
+			    position: absolute;
+			    bottom: -210px;
+			    left: 0;
+			    width: var(--dotSize);
+			    height: var(--dotSize);
+			    background: #000;
+			    border-radius: 50%;
+			}
+			
+			@for $i from 1 to $douCount + 1 {
+			    .g-dot:nth-child(#{$i}) {
+			        bottom: -#{randomNum(120, 240)}px;
+			        left: #{randomNum(300, -160)}px;
+			        animation: move #{randomNum($animationTime * 13, 7) / 10}s infinite #{randomNum($delayTime * 20) / 10}s linear;
+			    }
+			}
+			
+			@keyframes move {
+			    100% {
+			        transform: translate3d(0, -350px, 0);
+			    }
+			}
+			
+			/*文字融合*/
+			#a05 {
+				margin-top: 200px;
+			}
+			.container {
+			    width: 100%;
+			    height: 300px;
+			    position: relative;
+			    padding: 2em;
+			    filter: contrast(20);
+			    background-color: black;
+			    overflow: hidden;
+			}
+			
+			.container h1 {
+			    font-family: Righteous;
+			    color: white;
+			    font-size: 5rem;
+			    text-transform: uppercase;
+			    line-height: 1;
+			    animation: letterspacing 4s infinite alternate ease-in-out;
+			    display: block;
+			    position: absolute;
+			    left: 50%;
+			    top: 50%;
+			    transform: translate3d(-50%, -50%, 0);
+			    letter-spacing: -3.2rem;
+			}
+			
+			@keyframes letterspacing {
+			    0% {
+			        letter-spacing: -3.2rem;
+			        filter: blur(.5rem);
+			    }
+			
+				25% {
+			        filter: blur(.6rem);
+			    }
+			    
+			    50% {
+			        filter: blur(.8rem);
+			    }
+			
+				75% {
+			        filter: blur(.3rem);
+			    }
+			    
+			    100% {
+			        letter-spacing: 0rem;
+			        filter: blur(0rem);
+			        color: #fff;
+			    }
+			}
+		</style>
+	</head>
+	<body>
+		<div id="a01">
+			<h1>contrast/brightness -- hover 增亮图片</h1>
+			<p>通常页面上的按钮，都会有 hover/active 的颜色变化，以增强与用户的交互。但是一些图片展示，则很少有 hover 的交互，运用 filter: contrast() 或者 filter: brightness() 可以在 hover 图片的时候，调整图片的对比图或者亮度，达到聚焦用户视野的目的。
+brightness表示亮度，contrast 表示对比度。</p>
+			<div id="a123"></div>
+		</div>
+		
+		<div id="a02">
+			<h1>blur -- 生成图像阴影</h1>
+			<p>通常而言，我们生成阴影的方式大多是 box-shadow 、filter: drop-shadow() 、text-shadow 。但是，使用它们生成阴影是阴影只能是单色的。但是通过巧妙的利用 filter: blur 模糊滤镜，我们可以假装生成渐变色或者说是颜色丰富的阴影效果。</p>
+			<div class="container2">
+			    <div class="avator"></div>
+			    <p>bulr shadow</p>
+			</div>
+		</div>
+		
+		
+		<div id="a03">
+			<h1>blur 混合 contrast 产生融合效果</h1>
+			<p>filter: blur()： 给图像设置高斯模糊效果。<br />
+filter: contrast()： 调整图像的对比度。</p>
+			<div class="container3">
+	    		<div class="filter-mix"></div>
+			</div> 
+		</div>
+		
+		<div id="a05">
+			<h1>文字融合动画</h1>
+			<div class="container">
+	  			<h1>YesAR</h1>
+			</div>
+		</div>
+		
+		<div id="a04">
+			<h1>燃烧的火焰</h1>
+			<p>核心还是 filter: contrast() 与 filter: blur() 配合使用，不过实现的过程也非常有趣，我们需要使用 CSS 画出一个火焰形状。</p>
+			<div class="fire">
+				<div class="g-container">
+					<div class="g-fire">
+						
+					</div>
+				</div>
+	    		<!--.g-container
+				    .g-fire
+				        - for (var j = 1; j <=40; j++)
+				            .g-dot-->
+			</div> 
+		</div>
+		<script>
+			var a=getElementsClass("g-fire")；
+			for (var j = 1; j <=40; j++){
+				var b=$('<div class='g-dot'></div>');
+				a.append(b);
+			}
+		</script>
+		
+		
+	</body>
+</html>

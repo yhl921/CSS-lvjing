@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>你所不知道的 CSS 滤镜技巧与细节 - ChokCoco - 博客园</title>
+	<style type="text/css">
+	  	.MathJax_Hover_Frame {
+	  		border-radius: .25em; 
+	  		-webkit-border-radius: .25em; 
+	  		-moz-border-radius: .25em; -khtml-border-radius: .25em; 
+	  		box-shadow: 0px 0px 15px #83A; 
+	  		-webkit-box-shadow: 0px 0px 15px #83A; 
+	  		-moz-box-shadow: 0px 0px 15px #83A; 
+	  		-khtml-box-shadow: 0px 0px 15px #83A; 
+	  		border: 1px solid #A6D ! important; 
+	  		display: inline-block; position: absolute;
+	  		}
+	  		
+		.MathJax_Menu_Button .MathJax_Hover_Arrow {
+			position: absolute; 
+			cursor: pointer; 
+			display: inline-block; 
+			border: 2px solid #AAA; 
+			border-radius: 4px; 
+			-webkit-border-radius: 4px; 
+			-moz-border-radius: 4px; 
+			-khtml-border-radius: 4px; 
+			font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0;
+			}
+		.MathJax_Menu_Button .MathJax_Hover_Arrow span {
+			display: block; 
+			background-color: #AAA; 
+			border: 1px solid; 
+			border-radius: 3px; 
+			line-height: 0; padding: 4px;
+			}
+		.MathJax_Hover_Arrow:hover {
+			color: white!important; 
+			border: 2px solid #CCC!important;
+			}
+		.MathJax_Hover_Arrow:hover span {
+			background-color: #CCC!important;
+			}
+	</style>
+	<style type="text/css">
+		#MathJax_About {
+			position: fixed; 
+			left: 50%; width: auto; 
+			text-align: center; 
+			border: 3px outset; 
+			padding: 1em 2em; 
+			background-color: #DDDDDD; 
+			color: black; 
+			cursor: default; 
+			font-family: message-box; 
+			font-size: 120%; 
+			font-style: normal; 
+			text-indent: 0; 
+			text-transform: none; 
+			line-height: normal; 
+			letter-spacing: normal; 
+			word-spacing: normal; 
+			word-wrap: normal; 
+			white-space: nowrap; 
+			float: none; 
+			z-index: 201; 
+			border-radius: 15px; 
+			-webkit-border-radius: 15px; 
+			-moz-border-radius: 15px; -khtml-border-radius: 15px; 
+			box-shadow: 0px 10px 20px #808080; 
+			-webkit-box-shadow: 0px 10px 20px #808080; 
+			-moz-box-shadow: 0px 10px 20px #808080; 
+			-khtml-box-shadow: 0px 10px 20px #808080; 
+			filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+			}
+		#MathJax_About.MathJax_MousePost {
+			outline: none;
+			}
+		.MathJax_Menu {
+			position: absolute; 
+			background-color: white; 
+			color: black; 
+			width: auto; 
+			padding: 2px; 
+			border: 1px solid #CCCCCC; 
+			margin: 0; 
+			cursor: default; 
+			font: menu; 
+			text-align: left; 
+			text-indent: 0; 
+			text-transform: none; 
+			line-height: normal; 
+			letter-spacing: normal; 
+			word-spacing: normal; 
+			word-wrap: normal; 
+			white-space: nowrap; 
+			float: none; 
+			z-index: 201; 
+			box-shadow: 0px 10px 20px #808080; 
+			-webkit-box-shadow: 0px 10px 20px #808080; 
+			-moz-box-shadow: 0px 10px 20px #808080; 
+			-khtml-box-shadow: 0px 10px 20px #808080; 
+			filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+			}
+		.MathJax_MenuItem {
+			padding: 2px 2em; background: transparent;
+			}
+		.MathJax_MenuArrow {
+			position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em;
+			}
+		.MathJax_MenuActive .MathJax_MenuArrow {
+			color: white;
+			}
+		.MathJax_MenuArrow.RTL {
+			left: .5em; right: auto;
+			}
+		.MathJax_MenuCheck {
+			position: absolute; left: .7em;
+			}
+		.MathJax_MenuCheck.RTL {
+			right: .7em; left: auto;
+			}
+		.MathJax_MenuRadioCheck {
+			position: absolute; left: 1em;
+			}
+		.MathJax_MenuRadioCheck.RTL {
+			right: 1em; left: auto;
+			}
+		.MathJax_MenuLabel {
+			padding: 2px 2em 4px 1.33em; font-style: italic;
+			}
+		.MathJax_MenuRule {
+			border-top: 1px solid #CCCCCC; margin: 4px 1px 0px;
+			}
+		.MathJax_MenuDisabled {
+			color: GrayText;
+			}
+		.MathJax_MenuActive {
+			background-color: Highlight; color: HighlightText;
+			}
+		.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {
+			background-color: #E8E8E8;
+			}
+		.MathJax_ContextMenu:focus {
+			outline: none;
+			}
+		.MathJax_ContextMenu .MathJax_MenuItem:focus {
+			outline: none;
+			}
+		#MathJax_AboutClose {
+			top: .2em; right: .2em;
+			}
+		.MathJax_Menu .MathJax_MenuClose {
+			top: -10px; left: -10px;
+			}
+		.MathJax_MenuClose {
+			position: absolute; 
+			cursor: pointer; 
+			display: inline-block; 
+			border: 2px solid #AAA;
+			border-radius: 18px; 
+			-webkit-border-radius: 18px; 
+			-moz-border-radius: 18px; 
+			-khtml-border-radius: 18px; 
+			font-family: 'Courier New',Courier; 
+			font-size: 24px; 
+			color: #F0F0F0;
+			}
+		.MathJax_MenuClose span {
+			display: block; 
+			background-color: #AAA; 
+			border: 1.5px solid; 
+			border-radius: 18px; 
+			-webkit-border-radius: 18px; 
+			-moz-border-radius: 18px; 
+			-khtml-border-radius: 18px; 
+			line-height: 0; padding: 8px 0 6px;
+			}
+		.MathJax_MenuClose:hover {
+			color: white!important; 
+			border: 2px solid #CCC!important;
+			}
+		.MathJax_MenuClose:hover span {
+			background-color: #CCC!important;
+			}
+		.MathJax_MenuClose:hover:focus {
+			outline: none;
+			}
+	</style>
+	<style type="text/css">
+		.MathJax_Preview .MJXf-math {
+			color: inherit!important;
+			}
+	</style>
+
+	<style type="text/css">
+		.MJX_Assistive_MathML {
+			position: absolute!important; 
+			top: 0; left: 0; 
+			clip: rect(1px, 1px, 1px, 1px); 
+			padding: 1px 0 0 0!important; 
+			border: 0!important; 
+			height: 1px!important; 
+			width: 1px!important; 
+			overflow: hidden!important; 
+			display: block!important; 
+			-webkit-touch-callout: none; 
+			-webkit-user-select: none; 
+			-khtml-user-select: none; 
+			-moz-user-select: none; 
+			-ms-user-select: none; user-select: none;
+			}
+		.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {
+			width: 100%!important;
+			}
+	</style>
+
+	<style type="text/css">
+		#MathJax_Zoom {
+			position: absolute; 
+			background-color: #F0F0F0; 
+			overflow: auto; display: 
+			block; z-index: 301; 
+			padding: .5em; 
+			border: 1px solid black; 
+			margin: 0; 
+			font-weight: normal; 
+			font-style: normal; 
+			text-align: left; 
+			text-indent: 0; 
+			text-transform: none; 
+			line-height: normal; 
+			letter-spacing: normal; 
+			word-spacing: normal; 
+			word-wrap: normal; 
+			white-space: nowrap; 
+			float: none; 
+			-webkit-box-sizing: content-box; 
+			-moz-box-sizing: content-box; 
+			box-sizing: content-box; 
+			box-shadow: 5px 5px 15px #AAAAAA; 
+			-webkit-box-shadow: 5px 5px 15px #AAAAAA; 
+			-moz-box-shadow: 5px 5px 15px #AAAAAA; 
+			-khtml-box-shadow: 5px 5px 15px #AAAAAA; 
+			filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+			}
+		#MathJax_ZoomOverlay {
+			position: absolute; 
+			left: 0; top: 0; 
+			z-index: 300; 
+			display: inline-block; 
+			width: 100%; 
+			height: 100%; 
+			border: 0; 
+			padding: 0; 
+			margin: 0; 
+			background-color: white; 
+			opacity: 0; 
+			filter: alpha(opacity=0);
+			}
+		#MathJax_ZoomFrame {
+			position: relative; 
+			display: inline-block; 
+			height: 0; 
+			width: 0;
+			}
+		#MathJax_ZoomEventTrap {
+			position: absolute; 
+			left: 0; 
+			top: 0; 
+			z-index: 302; 
+			display: inline-block; 
+			border: 0; 
+			padding: 0; 
+			margin: 0; 
+			background-color: white; 
+			opacity: 0; 
+			filter: alpha(opacity=0);
+			}
+	</style>
+	
+	<style type="text/css">
+		.MathJax_Preview {
+			color: #888;
+			}
+		#MathJax_Message {
+			position: fixed; 
+			left: 1em; 
+			bottom: 1.5em; 
+			background-color: #E6E6E6; 
+			border: 1px solid #959595; 
+			margin: 0px; 
+			padding: 2px 8px; 
+			z-index: 102; 
+			color: black; 
+			font-size: 80%; 
+			width: auto; 
+			white-space: nowrap;
+			}
+		#MathJax_MSIE_Frame {
+			position: absolute; 
+			top: 0; 
+			left: 0; 
+			width: 0px; 
+			z-index: 101; 
+			border: 0px; 
+			margin: 0px; 
+			padding: 0px;
+			}
+		.MathJax_Error {
+			color: #CC0000; 
+			font-style: italic;
+			}
+	</style>
+	
+	<style type="text/css">
+		.MJXp-script {
+			font-size: .8em;
+			}
+		.MJXp-right {
+			-webkit-transform-origin: right; 
+			-moz-transform-origin: right; 
+			-ms-transform-origin: right; 
+			-o-transform-origin: right; 
+			transform-origin: right;
+			}
+		.MJXp-bold {
+			font-weight: bold;
+			}
+		.MJXp-italic {
+			font-style: italic;
+			}
+		.MJXp-scr {
+			font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif;
+			}
+		.MJXp-frak {
+			font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif;
+			}
+		.MJXp-sf {
+			font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif;
+			}
+		.MJXp-cal {
+			font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif;
+			}
+		.MJXp-mono {
+			font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif;
+			}
+		.MJXp-largeop {
+			font-size: 150%;
+			}
+		.MJXp-largeop.MJXp-int {
+			vertical-align: -.2em;
+			}
+		.MJXp-math {
+			display: inline-block; 
+			line-height: 1.2; 
+			text-indent: 0; 
+			font-family: 'Times New Roman',Times,STIXGeneral,serif; 
+			white-space: nowrap; 
+			border-collapse: collapse;
+			}
+		.MJXp-display {
+			display: block; 
+			text-align: center; 
+			margin: 1em 0;
+			}
+		.MJXp-math span {
+			display: inline-block;
+			}
+		.MJXp-box {
+			display: block!important;
+			 text-align: center;
+			 }
+		.MJXp-box:after {
+			content: " ";
+			}
+		.MJXp-rule {
+			display: block!important; 
+			margin-top: .1em;
+			}
+		.MJXp-char {
+			display: block!important;
+			}
+		.MJXp-mo {
+			margin: 0 .15em;
+			}
+		.MJXp-mfrac {
+			margin: 0 .125em; 
+			vertical-align: .25em;
+			}
+		.MJXp-denom {
+			display: inline-table!important; 
+			width: 100%;
+			}
+		.MJXp-denom > * {
+			display: table-row!important;
+			}
+		.MJXp-surd {
+			vertical-align: top;
+			}
+		.MJXp-surd > * {
+			display: block!important;
+			}
+		.MJXp-script-box > *  {
+			display: table!important; height: 50%;
+			}
+		.MJXp-script-box > * > * {
+			display: table-cell!important; 
+			vertical-align: top;
+			}
+		.MJXp-script-box > *:last-child > * {
+			vertical-align: bottom;
+			}
+		.MJXp-script-box > * > * > * {
+			display: block!important;
+			}
+		.MJXp-mphantom {
+			visibility: hidden;
+			}
+		.MJXp-munderover {
+			display: inline-table!important;
+			}
+		.MJXp-over {
+			display: inline-block!important; 
+			text-align: center;
+			}
+		.MJXp-over > * {
+			display: block!important;
+			}
+		.MJXp-munderover > * {
+			display: table-row!important;
+			}
+		.MJXp-mtable {
+			vertical-align: .25em; 
+			margin: 0 .125em;
+			}
+		.MJXp-mtable > * {
+			display: inline-table!important; 
+			vertical-align: middle;
+			}
+		.MJXp-mtr {
+			display: table-row!important;
+			}
+		.MJXp-mtd {
+			display: table-cell!important; 
+			text-align: center; 
+			padding: .5em 0 0 .5em;
+			}
+		.MJXp-mtr > .MJXp-mtd:first-child {
+			padding-left: 0;
+			}
+		.MJXp-mtr:first-child > .MJXp-mtd {
+			padding-top: 0;
+			}
+		.MJXp-mlabeledtr {
+			display: table-row!important;
+			}
+		.MJXp-mlabeledtr > .MJXp-mtd:first-child {
+			padding-left: 0;
+			}
+		.MJXp-mlabeledtr:first-child > .MJXp-mtd {
+			padding-top: 0;
+			}
+		.MJXp-merror {
+			background-color: #FFFF88; 
+			color: #CC0000; 
+			border: 1px solid #CC0000; 
+			padding: 1px 3px; 
+			font-style: normal; 
+			font-size: 90%;
+			}
+		.MJXp-scale0 {
+			-webkit-transform: scaleX(.0); 
+			-moz-transform: scaleX(.0); 
+			-ms-transform: scaleX(.0); 
+			-o-transform: scaleX(.0); 
+			transform: scaleX(.0);
+			}
+		.MJXp-scale1 {
+			-webkit-transform: scaleX(.1);
+			 -moz-transform: scaleX(.1); 
+			 -ms-transform: scaleX(.1); 
+			 -o-transform: scaleX(.1); 
+			 transform: scaleX(.1);
+			 }
+		.MJXp-scale2 {
+			-webkit-transform: scaleX(.2); 
+			-moz-transform: scaleX(.2); 
+			-ms-transform: scaleX(.2); 
+			-o-transform: scaleX(.2); 
+			transform: scaleX(.2);
+			}
+		.MJXp-scale3 {
+			-webkit-transform: scaleX(.3); 
+			-moz-transform: scaleX(.3); 
+			-ms-transform: scaleX(.3); 
+			-o-transform: scaleX(.3); 
+			transform: scaleX(.3);
+			}
+		.MJXp-scale4 {
+			-webkit-transform: scaleX(.4); 
+			-moz-transform: scaleX(.4); 
+			-ms-transform: scaleX(.4); 
+			-o-transform: scaleX(.4); 
+			transform: scaleX(.4);
+			}
+		.MJXp-scale5 {
+			-webkit-transform: scaleX(.5); 
+			-moz-transform: scaleX(.5); 
+			-ms-transform: scaleX(.5); 
+			-o-transform: scaleX(.5); 
+			transform: scaleX(.5);
+			}
+		.MJXp-scale6 {
+			-webkit-transform: scaleX(.6); 
+			-moz-transform: scaleX(.6); 
+			-ms-transform: scaleX(.6); 
+			-o-transform: scaleX(.6); 
+			transform: scaleX(.6);
+			}
+		.MJXp-scale7 {
+			-webkit-transform: scaleX(.7); 
+			-moz-transform: scaleX(.7); 
+			-ms-transform: scaleX(.7); 
+			-o-transform: scaleX(.7); 
+			transform: scaleX(.7);
+			}
+		.MJXp-scale8 {
+			-webkit-transform: scaleX(.8); 
+			-moz-transform: scaleX(.8); 
+			-ms-transform: scaleX(.8); 
+			-o-transform: scaleX(.8); 
+			transform: scaleX(.8);
+			}
+		.MJXp-scale9 {
+			-webkit-transform: scaleX(.9); 
+			-moz-transform: scaleX(.9); 
+			-ms-transform: scaleX(.9); 
+			-o-transform: scaleX(.9); 
+			transform: scaleX(.9);
+			}
+		.MathJax_PHTML .noError {
+			vertical-align: ; 
+			font-size: 90%; 
+			text-align: left; 
+			color: black; 
+			padding: 1px 3px; 
+			border: 1px solid;
+			}
+	</style>
+</head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+<a name="top"></a>
+<div id="page_begin_html"><!--<link rel="stylesheet" type="text/css" href="http://res.cocococo.com/newStyle.css" />-->
+
+</div><script>load_page_begin_html();</script>
+
+<!--done-->
+<div id="home">
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/coco1s/p/7519460.html">你所不知道的 CSS 滤镜技巧与细节</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-size: 14px; font-family: verdana, geneva;">承接上一篇<a href="https://github.com/chokcoco/iCSS/issues/27">你所不知道的 CSS 动画技巧与细节</a>，本文主要介绍 CSS 滤镜的不常用用法，希望能给读者带来一些干货！</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">系列 CSS 文章汇总在我的&nbsp;<a href="https://github.com/chokcoco/iCSS" target="_blank">Github</a>&nbsp;，持续更新，欢迎点个 star 订阅收藏。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">OK，下面直接进入正文。本文所描述的滤镜，指的是 CSS3 出来后的滤镜，不是 IE 系列时代的滤镜，语法如下，还未接触过这个属性的可以先简单到&nbsp;<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter">MDN -- filter</a>&nbsp;了解下：</span></p>
+<div class="cnblogs_Highlighter sh-gutter">
+<div><div id="highlighter_913563" class="syntaxhighlighter  css"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="css plain">{</code></div><div class="line number2 index1 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: blur(</code><code class="css value">5px</code><code class="css plain">);</code></div><div class="line number3 index2 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: brightness(</code><code class="css value">0.4</code><code class="css plain">);</code></div><div class="line number4 index3 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: contrast(</code><code class="css value">200%</code><code class="css plain">);</code></div><div class="line number5 index4 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: drop-shadow(</code><code class="css value">16px</code> <code class="css value">16px</code> <code class="css value">20px</code> <code class="css value">blue</code><code class="css plain">);</code></div><div class="line number6 index5 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: grayscale(</code><code class="css value">50%</code><code class="css plain">);</code></div><div class="line number7 index6 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: hue-rotate(</code><code class="css value">90</code><code class="css plain">deg);</code></div><div class="line number8 index7 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: </code><code class="css value">invert</code><code class="css plain">(</code><code class="css value">75%</code><code class="css plain">);</code></div><div class="line number9 index8 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: opacity(</code><code class="css value">25%</code><code class="css plain">);</code></div><div class="line number10 index9 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: saturate(</code><code class="css value">30%</code><code class="css plain">);</code></div><div class="line number11 index10 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: sepia(</code><code class="css value">60%</code><code class="css plain">);</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css comments">/* Apply multiple filters */</code></div><div class="line number14 index13 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: contrast(</code><code class="css value">175%</code><code class="css plain">) brightness(</code><code class="css value">3%</code><code class="css plain">);</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css comments">/* Global values */</code></div><div class="line number17 index16 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: inherit;</code></div><div class="line number18 index17 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: initial;</code></div><div class="line number19 index18 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: unset;</code></div><div class="line number20 index19 alt1"><code class="css plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<h2><span style="font-size: 18pt; font-family: verdana, geneva;">基本用法</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">先简单看看几种滤镜的效果：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30317113-c504a6ce-97db-11e7-8988-75db2876e39f.png" target="_blank"><iframe id="iframe_0.13661985134248078" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30317113-c504a6ce-97db-11e7-8988-75db2876e39f.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.13661985134248078',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 916px; height: 354px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/wrwbvG">CodePen Demo -- Css3 filter</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">你可以通过 hover 取消滤镜，观察该滤镜的效果。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">简单来说，CSS 滤镜就是提供类似 PS 的图形特效，像模糊，锐化或元素变色等功能。通常被用于调整图片，背景和边界的渲染。本文就会围绕这些滤镜展开，看看具体能怎么使用或者玩出什么花活。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30317169-e9639660-97db-11e7-97ad-678934ee919c.png" target="_blank"><iframe id="iframe_0.8085950276625238" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30317169-e9639660-97db-11e7-97ad-678934ee919c.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.8085950276625238',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 173px; height: 165px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<h3><span style="font-size: 14pt; font-family: verdana, geneva;">常用用法</span></h3>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">既然是标题是你所不知道的技巧与细节，那么比较常用的一些用法就不再赘述，通常我们见得比较多的 CSS 滤镜用法有：</span></p>
+<ol>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">使用&nbsp;<code>filter: blur()</code>&nbsp;生成毛玻璃效果</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">使用&nbsp;<code>filter: drop-shadow()</code>&nbsp;生成整体阴影效果</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">使用&nbsp;<code>filter: opacity()</code>&nbsp;生成透明度</span></li>
+</ol>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">如果对上面的技巧不是很了解，可以稍稍百度谷歌一下，下文将由浅及深，介绍一些不大常见的滤镜的具体用法及一些小细节：</span></p>
+<p>&nbsp;</p>
+<h2><span style="font-size: 18pt; font-family: verdana, geneva;"><code>contrast/brightness</code>&nbsp;-- hover 增亮图片</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">通常页面上的按钮，都会有 hover/active 的颜色变化，以增强与用户的交互。但是一些图片展示，则很少有 hover 的交互，运用&nbsp;<code>filter: contrast()</code>&nbsp;或者&nbsp;<code>filter: brightness()</code>&nbsp;可以在 hover 图片的时候，调整图片的对比图或者亮度，达到聚焦用户视野的目的。</span></p>
+<blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">brightness表示亮度，contrast 表示对比度。</span></p>
+</blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">当然，这个方法同样适用于按钮，简单的 CSS 代码如下：</span></p>
+<div class="cnblogs_Highlighter sh-gutter">
+<div><div id="highlighter_804281" class="syntaxhighlighter  css"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="css plain">.btn:hover,</code></div><div class="line number2 index1 alt1"><code class="css plain">.img:hover {</code></div><div class="line number3 index2 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">transition: filter .</code><code class="css value">3</code><code class="css plain">s;</code></div><div class="line number4 index3 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: brightness(</code><code class="css value">1.1</code><code class="css plain">) contrast(</code><code class="css value">110%</code><code class="css plain">);</code></div><div class="line number5 index4 alt2"><code class="css plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30323806-3dd9de60-97f1-11e7-97b9-1537ee2528d3.gif" target="_blank"><iframe id="iframe_0.49397174421666024" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30323806-3dd9de60-97f1-11e7-97b9-1537ee2528d3.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.49397174421666024',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 329px; height: 283px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/RLwbyr">CodePen Demo -- CSS3 filter hover IMG</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><iframe title="CSS3 filter hover IMG" src="https://codepen.io/Chokcoco/embed/RLwbyr/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" scrolling="no" width="320" height="265"></iframe></span></p>
+<h2><span style="font-size: 12px;">&nbsp;&nbsp;</span></h2>
+<h2><span style="font-size: 18pt; font-family: verdana, geneva;"><code>blur</code>&nbsp;-- 生成图像阴影</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">通常而言，我们生成阴影的方式大多是&nbsp;<code>box-shadow</code>&nbsp;、<code>filter: drop-shadow()</code>&nbsp;、<code>text-shadow</code>&nbsp;。但是，使用它们生成阴影是阴影只能是单色的。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">有读者同学会问了，你这么说，难道还可以生成渐变色的阴影不成？</span><br><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30325113-0fe5ecce-97f6-11e7-9d69-3d51c6dc09f4.png" target="_blank"><iframe id="iframe_0.49118938297638315" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30325113-0fe5ecce-97f6-11e7-9d69-3d51c6dc09f4.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.49118938297638315',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 109px; height: 89px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">额，当然不行。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30325195-69bb07fc-97f6-11e7-9161-b927956a0748.png" target="_blank"><iframe id="iframe_0.10065721387827509" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30325195-69bb07fc-97f6-11e7-9161-b927956a0748.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.10065721387827509',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 180px; height: 184px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">这个真不行，但是通过巧妙的利用&nbsp;<code>filter: blur</code>&nbsp;模糊滤镜，我们可以假装生成渐变色或者说是颜色丰富的阴影效果。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">假设我们有下述这样一张头像图片：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30325717-52d0fc70-97f8-11e7-8d08-dbb960c85118.png" target="_blank"><iframe id="iframe_0.40134189107148965" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30325717-52d0fc70-97f8-11e7-8d08-dbb960c85118.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.40134189107148965',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 223px; height: 209px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">下面就利用滤镜，给它添加一层与原图颜色相仿的阴影效果，核心 CSS 代码如下：</span></p>
+<div class="cnblogs_Highlighter sh-gutter">
+<div><div id="highlighter_987899" class="syntaxhighlighter  css"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="css plain">.avator {</code></div><div class="line number2 index1 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">position</code><code class="css plain">: </code><code class="css value">relative</code><code class="css plain">;</code></div><div class="line number3 index2 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">background</code><code class="css plain">: </code><code class="css value">url</code><code class="css plain">($img) </code><code class="css value">no-repeat</code> <code class="css value">center</code> <code class="css value">center</code><code class="css plain">;</code></div><div class="line number4 index3 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">background-</code><code class="css keyword">size</code><code class="css plain">: </code><code class="css value">100%</code> <code class="css value">100%</code><code class="css plain">;</code></div><div class="line number5 index4 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">&amp;::after {</code></div><div class="line number7 index6 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">content</code><code class="css plain">: </code><code class="css string">""</code><code class="css plain">;</code></div><div class="line number8 index7 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">position</code><code class="css plain">: </code><code class="css value">absolute</code><code class="css plain">;</code></div><div class="line number9 index8 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">top</code><code class="css plain">: </code><code class="css value">10%</code><code class="css plain">;</code></div><div class="line number10 index9 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">width</code><code class="css plain">: </code><code class="css value">100%</code><code class="css plain">;</code></div><div class="line number11 index10 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">height</code><code class="css plain">: </code><code class="css value">100%</code><code class="css plain">;</code></div><div class="line number12 index11 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">background</code><code class="css plain">: inherit;</code></div><div class="line number13 index12 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">background-</code><code class="css keyword">size</code><code class="css plain">: </code><code class="css value">100%</code> <code class="css value">100%</code><code class="css plain">;</code></div><div class="line number14 index13 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: blur(</code><code class="css value">10px</code><code class="css plain">) brightness(</code><code class="css value">80%</code><code class="css plain">) opacity(.</code><code class="css value">8</code><code class="css plain">);</code></div><div class="line number15 index14 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">z-index</code><code class="css plain">: </code><code class="css value">-1</code><code class="css plain">;</code></div><div class="line number16 index15 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">}</code></div><div class="line number17 index16 alt2"><code class="css plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">看看效果：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30325739-7192878c-97f8-11e7-8fba-3c624226f1ad.png" target="_blank"><iframe id="iframe_0.809966983730473" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30325739-7192878c-97f8-11e7-8fba-3c624226f1ad.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.809966983730473',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 262px; height: 269px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">其简单的原理就是，利用伪元素，生成一个与原图一样大小的新图叠加在原图之下，然后利用滤镜模糊&nbsp;<code>filter: blur()</code>&nbsp;配合其他的亮度/对比度，透明度等滤镜，制作出一个虚幻的影子，伪装成原图的阴影效果。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">嗯，最重要的就是这一句&nbsp;<code>filter: blur(10px) brightness(80%) opacity(.8);</code>&nbsp;。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/eGYYpo">CodePen Demo -- filter create shadow</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><iframe title="filter create shadow" src="https://codepen.io/Chokcoco/embed/eGYYpo/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" scrolling="no" width="320" height="265"></iframe></span></p>
+<p><span style="font-size: 12px; font-family: verdana, geneva;">&nbsp;</span></p>
+<h2><span style="font-size: 18pt; font-family: verdana, geneva;"><code>blur</code>&nbsp;混合&nbsp;<code>contrast</code>&nbsp;产生融合效果</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">接下来介绍的这个，是本文的重点，模糊滤镜叠加对比度滤镜产生的融合效果。让你知道什么是 CSS 黑科技！</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">单独将两个滤镜拿出来，它们的作用分别是：</span></p>
+<ol>
+<li><span style="font-size: 14px; font-family: verdana, geneva;"><code>filter: blur()</code>： 给图像设置高斯模糊效果。</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;"><code>filter: contrast()</code>： 调整图像的对比度。</span></li>
+</ol>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">但是，当他们“合体”的时候，产生了奇妙的融合现象，通过对比度滤镜把高斯模糊的模糊边缘给干掉，利用高斯模糊实现融合效果。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">先来看一个简单的例子：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30364156-9b5dc8e0-9895-11e7-876e-4c43af234ca3.gif" target="_blank"><iframe id="iframe_0.4507520087605812" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30364156-9b5dc8e0-9895-11e7-876e-4c43af234ca3.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.4507520087605812',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 279px; height: 156px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/QqWBqV">CodePen Demo -- filter mix between blur and contrast</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><iframe title="filter mix between blur and contrast" src="https://codepen.io/Chokcoco/embed/QqWBqV/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" scrolling="no" width="320" height="265"></iframe></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">仔细看两圆相交的过程，在边与边接触的时候，会产生一种边界融合的效果。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">上述效果的实现基于两点：</span></p>
+<ol>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">图形是在被设置了&nbsp;<code>filter: contrast()</code>&nbsp;的画布背景上进行动画的</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">进行动画的图形被设置了&nbsp;<code>filter: blur()</code>（ 进行动画的图形的父元素需要是被设置了&nbsp;<code>filter: contrast()</code>&nbsp;的画布）</span></li>
+</ol>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">意思是，上面两圆运动的背后，其实是叠加了一张设置了&nbsp;<code>filter: contrast()</code>&nbsp;的大白色背景，而两个圆形则被设置了&nbsp;<code>filter: blur()</code>&nbsp;，两个条件缺一不可。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">当然，背景色不一定是白色，我们稍稍修改上面的Demo，简单的示意图如下：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30364469-f3347b58-9896-11e7-82ec-ee7b32189a1a.png" target="_blank"><iframe id="iframe_0.29340143510238725" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30364469-f3347b58-9896-11e7-82ec-ee7b32189a1a.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.29340143510238725',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 491px; height: 291px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<h3><span style="font-size: 14pt; font-family: verdana, geneva;">燃烧的火焰</span></h3>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">好，上面介绍完原理，下面看看使用这个效果制作的一些强大 CSS 效果，其中最为惊艳的就是使用融合效果制作生成火焰，这个效果我最早是见于&nbsp;<a href="https://codepen.io/YusukeNakaya/pens/public/">Yusuke Nakaya</a>&nbsp;这位作者：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30364781-3997cd10-9898-11e7-8c25-c54c6b6db705.gif" target="_blank"><iframe id="iframe_0.2562250090094764" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30364781-3997cd10-9898-11e7-8c25-c54c6b6db705.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.2562250090094764',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 287px; height: 234px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">不用怀疑你的眼睛，上述 GIF 效果就是使用纯 CSS 实现的。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">核心还是&nbsp;<code>filter: contrast()</code>&nbsp;与&nbsp;<code>filter: blur()</code>&nbsp;配合使用，不过实现的过程也非常有趣，我们需要使用 CSS 画出一个火焰形状。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">火焰形状 CSS 核心代码如下：</span></p>
+<div class="cnblogs_Highlighter sh-gutter">
+<div><div id="highlighter_217400" class="syntaxhighlighter  css"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="css plain">.fire {</code></div><div class="line number2 index1 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">width</code><code class="css plain">: </code><code class="css value">0</code><code class="css plain">;</code></div><div class="line number3 index2 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">height</code><code class="css plain">: </code><code class="css value">0</code><code class="css plain">;</code></div><div class="line number4 index3 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">border-radius: </code><code class="css value">45%</code><code class="css plain">;</code></div><div class="line number5 index4 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">box-sizing: border-box;</code></div><div class="line number6 index5 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">border</code><code class="css plain">: </code><code class="css value">100px</code> <code class="css value">solid</code> <code class="css value">#000</code><code class="css plain">;</code></div><div class="line number7 index6 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">border-bottom</code><code class="css plain">: </code><code class="css value">100px</code><code class="css plain">solid </code><code class="css value">transparent</code><code class="css plain">;</code></div><div class="line number8 index7 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css keyword">background-color</code><code class="css plain">: </code><code class="css value">#b5932f</code><code class="css plain">;</code></div><div class="line number9 index8 alt2"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">transform: scaleX(.</code><code class="css value">4</code><code class="css plain">);</code></div><div class="line number10 index9 alt1"><code class="css spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="css plain">filter: blur(</code><code class="css value">20px</code><code class="css plain">) contrast(</code><code class="css value">30</code><code class="css plain">);</code></div><div class="line number11 index10 alt2"><code class="css plain">}</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">大概是长这样：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30367321-87ecd340-98a0-11e7-853e-ee1f557b9c85.png" target="_blank"><iframe id="iframe_0.7905679540236046" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30367321-87ecd340-98a0-11e7-853e-ee1f557b9c85.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.7905679540236046',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 166px; height: 225px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">分解一下过程：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30368522-f746afba-98a3-11e7-93b8-92e2e2c1c622.png" target="_blank"><iframe id="iframe_0.3332262796531038" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30368522-f746afba-98a3-11e7-93b8-92e2e2c1c622.png?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.3332262796531038',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 916px; height: 299px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">放在纯黑的背景下，就得到了上述图片的效果。</span></p>
+<blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">这里会有个很大的疑问，增加了&nbsp;<code>filter: blur(20px) contrast(30);</code>&nbsp;之后，为什么纯色黑色和黄色的中间，生成了一条红色的边框？</span></p>
+</blockquote>
+<blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">这里我咨询了几个设计师、前端同事，得到的答复大概是两个不同滤镜的色值处理算法在边界处叠加作用得到了另外一种颜色。（不一定准确，求赐教），在 PS 里尝试还原这个效果，但是 PS 没有 contrast() 滤镜，得到的效果偏差挺大的。</span></p>
+</blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">OK，继续正文，接下来，我们只需要在火焰&nbsp;<code>.fire</code>&nbsp;这个 div 内部，用大量的黑色圆形，由下至上，无规律穿过火焰即可。由于滤镜的融合效果，火焰效果随之产生，这里为了方便理解，我把背景色切换成白色，火焰动画原理一看即懂：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30369622-bc2b3e6a-98a7-11e7-9422-170d6151c46c.gif" target="_blank"><iframe id="iframe_0.21358247718701628" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30369622-bc2b3e6a-98a7-11e7-9422-170d6151c46c.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.21358247718701628',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 182px; height: 375px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">具体完整实现可以看这里：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/GvbMmE">CodePen Demo -- CSS fire | CSS filter mix</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><iframe title="CSS fire| CSS filter mix" src="https://codepen.io/Chokcoco/embed/GvbMmE/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" scrolling="no" width="320" height="265"></iframe></span></p>
+<p><span style="font-size: 12px; font-family: verdana, geneva;">&nbsp;</span></p>
+<h2><span style="font-size: 14pt; font-family: verdana, geneva;">文字融合动画</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">另外，我们可以在动画的过程中，动态改变元素滤镜的&nbsp;<code>filter: blur()</code>&nbsp;的值。</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">利用这个方法，我们还可以设计一些文字融合的效果：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30375460-317c7cf2-98bb-11e7-8659-c764c20f07bb.gif" target="_blank"><iframe id="iframe_0.6702406142513189" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30375460-317c7cf2-98bb-11e7-8659-c764c20f07bb.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.6702406142513189',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 802px; height: 136px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://user-images.githubusercontent.com/8554143/30376473-1ca6d56c-98bf-11e7-9682-dedec1348e13.gif" target="_blank"><iframe id="iframe_0.2900649088344156" src="data:text/html;charset=utf8,%3Cstyle%3Ebody%7Bmargin:0;padding:0%7D%3C/style%3E%3Cimg%20id=%22img%22%20src=%22https://user-images.githubusercontent.com/8554143/30376473-1ca6d56c-98bf-11e7-9682-dedec1348e13.gif?_=7519460%22%20style=%22border:none;max-width:916px%22%3E%3Cscript%3Ewindow.onload%20=%20function%20()%20%7Bvar%20img%20=%20document.getElementById('img');%20window.parent.postMessage(%7BiframeId:'iframe_0.2900649088344156',width:img.width,height:img.height%7D,%20'http://www.cnblogs.com');%7D%3C/script%3E" style="border: none; width: 894px; height: 148px;" frameborder="0" scrolling="no"></iframe></a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">具体实现你可以看这里：</span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><a href="https://codepen.io/Chokcoco/pen/jLjNRj">CodePen Demo -- word animation | word filter</a></span></p>
+<p><span style="font-size: 14px; font-family: verdana, geneva;"><iframe title="word animation | word filter" src="https://codepen.io/Chokcoco/embed/jLjNRj/?height=265&amp;theme-id=0&amp;default-tab=css,result&amp;embed-version=2" frameborder="no" scrolling="no" width="320" height="265"></iframe></span></p>
+<p><span style="font-size: 12px; font-family: verdana, geneva;">&nbsp;</span></p>
+<h2><span style="font-size: 18pt; font-family: verdana, geneva;">值得注意的细节点</span></h2>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">动画虽然美好，但是具体使用的过程中，仍然有一些需要注意的地方：</span></p>
+<ol>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">CSS 滤镜可以给同个元素同时定义多个，例如&nbsp;<code>filter: contrast(150%) brightness(1.5)</code>&nbsp;，但是滤镜的先后顺序不同产生的效果也是不一样的；</span></li>
+</ol>
+<blockquote>
+<p><span style="font-size: 14px; font-family: verdana, geneva;">也就是说，使用&nbsp;<code>filter: contrast(150%) brightness(1.5)</code>&nbsp;和&nbsp;<code>filter: brightness(1.5) contrast(150%)</code>&nbsp;处理同一张图片，得到的效果是不一样的，原因在于滤镜的色值处理算法对图片处理的先后顺序。</span></p>
+</blockquote>
+<ol start="2">
+<li><span style="font-size: 14px; font-family: verdana, geneva;">滤镜动画需要大量的计算，不断的重绘页面，属于非常消耗性能的动画，使用时要注意使用场景。记得开启硬件加速及合理使用分层技术；</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;"><code>blur()</code>&nbsp;混合&nbsp;<code>contrast()</code>&nbsp;滤镜效果，设置不同的颜色会产生不同的效果，这个颜色叠加的具体算法本文作者暂时也不是很清楚，使用时比较好的方法是多尝试不同颜色，观察取最好的效果；</span></li>
+<li><span style="font-size: 14px; font-family: verdana, geneva;">CSS3 filter 兼容性不算太好，但是在移动端已经可以比较正常的使用，更为精确的兼容性列表，查询&nbsp;<a href="http://caniuse.com/#search=filter">Can i Use</a>。</span></li>
+</ol>
+
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	
+
+</body></html>
